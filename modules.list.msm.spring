@@ -1,10 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-only
-# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+# Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+miev.ko
+zram.ko
+zsmalloc.ko
 qcom_cpu_vendor_hooks.ko
 qcom-scm.ko
 pinctrl-msm.ko
 pinctrl-blair.ko
 pinctrl-holi.ko
+fpc1020_platform_tee.ko
+goodix_fp.ko
 cmd-db.ko
 qcom_ipc_logging.ko
 irq-qcom-mpm.ko
@@ -91,4 +96,12 @@ crypto-qti-common.ko
 crypto-qti-hwkm.ko
 hwkm_v1.ko
 sdhci-msm-scaling.ko
-rt6160-regulator.ko
+simtray.ko
+tms_device_modules.ko
+nfc_i2c.ko
+qti-regmap-debugfs.ko
+cpumaxfreq.ko
+panel_event_notifier.ko
+perfhelper.ko
+mi_rmap_efficiency.ko
+mi_async_reclaim.ko

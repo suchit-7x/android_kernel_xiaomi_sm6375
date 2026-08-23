@@ -1,11 +1,12 @@
 load(":target_variants.bzl", "la_variants")
 load(":msm_kernel_la.bzl", "define_msm_la")
 load(":image_opts.bzl", "boot_image_opts")
+load("//build/kernel/kleaf:kernel.bzl", "ddk_headers")
 
-target_name = "blair"
+target_name = "spring"
 
-def define_blair():
-    _blair_in_tree_modules = [
+def define_spring():
+    _spring_in_tree_modules = [
         # keep sorted
         "drivers/char/rdbg.ko",
         "drivers/clk/qcom/clk-dummy.ko",
@@ -13,6 +14,7 @@ def define_blair():
         "drivers/clk/qcom/clk-rpmh.ko",
         "drivers/clk/qcom/clk-smd-rpm.ko",
         "drivers/clk/qcom/clk-spmi-pmic-div.ko",
+        "drivers/staging/miev/miev.ko",
         "drivers/clk/qcom/debugcc-blair.ko",
         "drivers/clk/qcom/debugcc-holi.ko",
         "drivers/clk/qcom/dispcc-blair.ko",
@@ -55,6 +57,9 @@ def define_blair():
         "drivers/i3c/master/i3c-master-msm-geni.ko",
         "drivers/iio/adc/qcom-spmi-adc5.ko",
         "drivers/iio/adc/qcom-vadc-common.ko",
+        "drivers/input/fingerprints/fpc/fpc1020_platform_tee.ko",
+        "drivers/input/fingerprints/goodix/goodix_fp.ko",
+        "drivers/input/fingerprints/xiaomi_fp/xiaomi_fingerprint.ko",
         "drivers/input/misc/pm8941-pwrkey.ko",
         "drivers/input/misc/qpnp-power-on.ko",
         "drivers/input/touchscreen/usbtouchscreen.ko",
@@ -72,7 +77,6 @@ def define_blair():
         "drivers/irqchip/irq-qcom-mpm.ko",
         "drivers/irqchip/msm_show_resume_irq.ko",
         "drivers/irqchip/qcom-mpm.ko",
-        "drivers/leds/leds-aw2016.ko",
         "drivers/leds/leds-qpnp-flash-v2.ko",
         "drivers/leds/leds-qpnp-vibrator-ldo.ko",
         "drivers/leds/leds-qti-tri-led.ko",
@@ -100,12 +104,20 @@ def define_blair():
         "drivers/power/reset/qcom-dload-mode.ko",
         "drivers/power/reset/qcom-pon.ko",
         "drivers/power/reset/reboot-mode.ko",
+        "drivers/power/reset/qcom-reboot-reason.ko",
         "drivers/power/supply/qcom/charger_partition.ko",
         "drivers/power/supply/qcom/fg_bq28z610.ko",
         "drivers/power/supply/qcom/gauge-iio.ko",
-        "drivers/power/supply/qcom/qcom-smb1355-charger.ko",
-        "drivers/power/supply/qcom/qcom-smb1398-charger.ko",
+        #"drivers/power/supply/qcom/qcom-smb1355-charger.ko",
+        #"drivers/power/supply/qcom/qcom-smb1398-charger.ko",
         "drivers/power/supply/qcom/qpnp-smb5-main.ko",
+        "drivers/power/supply/qcom/bq25960h_charger.ko",
+        "drivers/power/supply/qcom/bq25960_charger.ko",
+        "drivers/power/supply/qcom/sc853x_charger.ko",
+        "drivers/power/supply/qcom/pd_policy_manager.ko",
+        "drivers/base/regmap/qti-regmap-debugfs.ko",
+        "drivers/power/supply/qcom/cp_qc30.ko",
+        "drivers/power/supply/qcom/xm_smart_chg.ko",
         "drivers/pwm/pwm-qti-lpg.ko",
         "drivers/regulator/debug-regulator.ko",
         "drivers/regulator/proxy-consumer.ko",
@@ -180,6 +192,7 @@ def define_blair():
         "drivers/soc/qcom/smsm.ko",
         "drivers/soc/qcom/socinfo.ko",
         "drivers/soc/qcom/sps/sps_drv.ko",
+	"drivers/soc/qcom/rpm-smd-debug.ko",
         "drivers/spi/spi-msm-geni.ko",
         "drivers/spi/spidev.ko",
         "drivers/spmi/spmi-pmic-arb.ko",
@@ -201,6 +214,8 @@ def define_blair():
         "drivers/thermal/qcom/thermal_pause.ko",
         "drivers/tty/serial/msm_geni_serial.ko",
         "drivers/ufs/host/ufs_qcom.ko",
+        "drivers/misc/simtray/simtray.ko",
+	"drivers/misc/perfhelper/perfhelper.ko",
         "drivers/ufs/host/ufshcd-crypto-qti.ko",
         "drivers/uio/msm_sharedmem/msm_sharedmem.ko",
         "drivers/usb/dwc3/dwc3-msm.ko",
@@ -220,7 +235,6 @@ def define_blair():
         "drivers/usb/phy/phy-qcom-emu.ko",
         "drivers/nfc/tmsdrv/tms_device_modules.ko",
         "drivers/nfc/pn560/nfc_i2c.ko",
-        "drivers/staging/miev/miev.ko",
         "kernel/msm_sysstats.ko",
         "kernel/sched/walt/sched-walt.ko",
         "kernel/trace/qcom_ipc_logging.ko",
@@ -229,9 +243,24 @@ def define_blair():
         "net/qrtr/qrtr-smd.ko",
         "net/wireless/cfg80211.ko",
         "sound/usb/snd-usb-audio-qmi.ko",
+        "drivers/power/supply/qcom/lc_charger_sysfs-main.ko",
+        "drivers/mtd/mtd.ko",
+        "drivers/mtd/devices/block2mtd.ko",
+        "drivers/mtd/chips/chipreg.ko",
+        "drivers/mtd/parsers/ofpart.ko",
+        "drivers/mtd/mtd_blkdevs.ko",
+        "drivers/mtd/mtdoops.ko",
+        "drivers/mtd/mtdblock.ko",
+        "drivers/block/zram/zram.ko",
+        "mm/zsmalloc.ko",
+        "drivers/regulator/rt6160-regulator.ko",
+	"drivers/staging/binder_prio/binder_prio.ko",
+        "drivers/staging/mi_rmap_efficiency/mi_rmap_efficiency.ko",
+        "drivers/staging/mi_async_reclaim/mi_async_reclaim.ko",
+        "drivers/char/xlogchar.ko",
     ]
 
-    _blair_consolidate_in_tree_modules = _blair_in_tree_modules + [
+    _spring_consolidate_in_tree_modules = _spring_in_tree_modules + [
         # keep sorted
         "drivers/hwtracing/coresight/coresight-etm4x.ko",
         "drivers/misc/lkdtm/lkdtm.ko",
@@ -245,9 +274,9 @@ def define_blair():
 
     for variant in la_variants:
         if variant == "consolidate":
-            mod_list = _blair_consolidate_in_tree_modules
+            mod_list = _spring_consolidate_in_tree_modules
         else:
-            mod_list = _blair_in_tree_modules
+            mod_list = _spring_in_tree_modules
 
         define_msm_la(
             msm_target = target_name,
@@ -263,3 +292,22 @@ def define_blair():
                 ],
             ),
         )
+
+    ddk_headers(
+        name = "hwid_headers",
+        hdrs = [
+            "drivers/misc/hwid/hwid.h",
+        ],
+        includes = [
+            "drivers/misc/hwid",
+        ],
+        visibility = ["//visibility:public"],
+    )
+    ddk_headers(
+        name = "mi_irq_headers",
+        hdrs = native.glob(["kernel/irq/*.h"]),
+        includes = [
+            "kernel/irq",
+        ],
+        visibility = ["//visibility:public"],
+    )
